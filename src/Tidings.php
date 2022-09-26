@@ -2,17 +2,12 @@
 
 namespace Naviware\TidingsThroughMNotify;
 
-/**
- * Config class
- * @property string $API_KEY
- */
 class Tidings
 {
     /**
      * Constants for the client to connect to mNotify
     */
-    const BASE_ENDPOINT = "https://api.mnotify.com/api/";
-
+    private string $baseEndPoint;
     private string $apiKey;
     private string $senderID;
     private string $specificService;
@@ -21,6 +16,7 @@ class Tidings
 
     public function __construct(){
         $this->fullRequestURL = "";
+        $this->baseEndPoint = config('tidings.mnotify_base_endpoint');
         $this->apiKey = config('tidings.mnotify_api_key');
         $this->senderID = config('tidings.mnotify_sender_id');
     }
@@ -39,12 +35,20 @@ class Tidings
         $this->id = $id;
 
         if($this->id != null) {
-            $this->fullRequestURL = self::BASE_ENDPOINT . $this->specificService . "/" . $this->id . "/?key=" . $this->apiKey;
+            $this->fullRequestURL = $this->baseEndPoint . $this->specificService . "/" . $this->id . "/?key=" . $this->apiKey;
         } else {
-            $this->fullRequestURL = self::BASE_ENDPOINT . $this->specificService . "/?key=" . $this->apiKey;
+            $this->fullRequestURL = $this->baseEndPoint . $this->specificService . "/?key=" . $this->apiKey;
         }
 
         return $this->fullRequestURL;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBaseEndPoint(): string
+    {
+        return $this->baseEndPoint;
     }
 
     /**

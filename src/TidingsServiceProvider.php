@@ -3,7 +3,6 @@
  namespace Naviware\TidingsThroughMNotify;
 
  use Illuminate\Support\ServiceProvider;
- use Naviware\TidingsThroughMNotify\Tidings;
 
  class TidingsServiceProvider extends ServiceProvider {
     public function register()
@@ -12,6 +11,10 @@
         $this->app->bind('tidings', function ($app) {
             return new Tidings();
         });
+
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/courier.php', 'courier'
+        );
     }
 
     public function boot()
