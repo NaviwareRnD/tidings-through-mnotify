@@ -13,7 +13,7 @@
         });
 
         $this->mergeConfigFrom(
-            __DIR__.'/../config/courier.php', 'courier'
+            __DIR__.'/../config/tidings.php', 'tidings'
         );
     }
 
