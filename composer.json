@@ -32,7 +32,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Naviware\\TidingsThroughMNotify\\Providers\\TidingsServiceProvider"
+                "Naviware\\TidingsThroughMNotify\\TidingsServiceProvider"
             ],
             "aliases": {
                 "Tidings": "Naviware\\TidingsThroughMNotify\\Facades\\Tidings"
