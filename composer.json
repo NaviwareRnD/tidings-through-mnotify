@@ -1,0 +1,42 @@
+{
+    "name": "naviware/tidings-through-mnotify",
+    "description": "This package is for sending SMS notifications programmatically through the mNotify platform",
+    "license": "MIT",
+    "keywords": [
+        "Naviware",
+        "Tidings",
+        "mNotify",
+        "Bulk SMS",
+        "Laravel SMS",
+        "Ghana Bulk SMS"
+    ],
+    "authors": [
+        {
+          "name": "Naviware Research & Development",
+          "email": "teamserviceskeep@gmail.com",
+            "homepage": "https://www.packages.naviware.io/tidings-through-mnotify/",
+            "role": "Package Manager"
+        }
+      ],
+    "autoload": {
+        "psr-4": {
+            "Naviware\\TidingsThroughMNotify\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=8.0",
+        "illuminate/support": "^v8.83.24"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Naviware\\TidingsThroughMNotify\\Providers\\TidingsServiceProvider"
+            ],
+            "aliases": {
+                "Tidings": "Naviware\\TidingsThroughMNotify\\Facades\\Tidings"
+            }
+        }
+    }
+}
