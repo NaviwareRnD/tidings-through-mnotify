@@ -12,6 +12,17 @@
     return [
         /*
         |--------------------------------------------------------------------------
+        | BASE ENDPOINT
+        |--------------------------------------------------------------------------
+        |
+        | This is the base endpoint for the API of the mNotify platform.
+        | The default is https://api.mnotify.com/api/
+        |
+        */
+        'mnotify_base_endpoint' => env('MNOTIFY_BASE_ENDPOINT', 'https://api.mnotify.com/api/'),
+
+        /*
+        |--------------------------------------------------------------------------
         | API KEY
         |--------------------------------------------------------------------------
         |
