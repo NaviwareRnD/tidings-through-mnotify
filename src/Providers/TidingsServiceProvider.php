@@ -17,10 +17,13 @@
     public function boot()
     {
         //This publishes the package's config file for use to the application's config directory
-        // for user customization
-        $this->publishes([
-            __DIR__.'/../config/config.php' => config_path('tidings.php'),
-        ]);
+        // for user customization. This only works if the package is booted from the console
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__.'/../config/config.php' => config_path('tidings.php'),
+            ]);
+
+        }
     }
  }
 

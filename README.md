@@ -17,6 +17,10 @@ If you're new to Composer, here are some resources that you may find useful:
 1. `composer require naviware/tidings-through-mnotify`
 2. `composer update`
 
+#### Publish Configuration File
+To publish the configuration file, run the code below
+``php artisan vendor:publish --provider="Naviware\TidingsThroughMNotify\Providers\TidingsServiceProvider" --tag="config"``
+
 # Changelog
 Please see [CHANGELOG](https://github.com/NaviwareRnD/tidings-through-mnotify/blob/main/CHANGELOG.md) for more information on what has changed recently.
 
