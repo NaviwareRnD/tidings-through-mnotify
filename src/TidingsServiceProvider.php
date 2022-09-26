@@ -1,6 +1,6 @@
 <?php
 
- namespace Naviware\TidingsThroughMNotify\Providers;
+ namespace Naviware\TidingsThroughMNotify;
 
  use Illuminate\Support\ServiceProvider;
  use Naviware\TidingsThroughMNotify\Tidings;

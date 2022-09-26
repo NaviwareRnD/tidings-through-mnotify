@@ -73,7 +73,7 @@ class InstallTidingsPackage extends Command
     private function publishConfiguration($forcePublish = false)
     {
         $params = [
-            '--provider' => "Naviware\TidingsThroughMNotify\Providers\TidingsServiceProvider",
+            '--provider' => "Naviware\TidingsThroughMNotify\TidingsServiceProvider",
             '--tag' => "config"
         ];
 
