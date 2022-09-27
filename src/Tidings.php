@@ -15,8 +15,6 @@ class Tidings
     private string $id;
 
     public function __construct(){
-//        $this->informToPublishConfig();
-
         $this->fullRequestURL = "";
         $this->baseEndPoint = config('tidings.base_endpoint');
         $this->apiKey = config('tidings.api_key');

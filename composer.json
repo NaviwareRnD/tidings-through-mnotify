@@ -29,6 +29,11 @@
         "php": ">=8.0",
         "illuminate/support": "^v8.83.24"
     },
+    "scripts": {
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=tidings-config"
+        ]
+    },
     "extra": {
         "laravel": {
             "providers": [
