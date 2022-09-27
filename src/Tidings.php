@@ -2,17 +2,21 @@
 
 namespace Naviware\Tidings;
 
+use Illuminate\Support\Facades\Http;
+
 class Tidings
 {
     /**
      * Constants for the client to connect to mNotify
     */
-    private string $baseEndPoint;
-    private string $apiKey;
-    private string $senderID;
-    private string $specificService;
-    private string $fullRequestURL;
-    private int $id;
+    public string $baseEndPoint;
+    public string $apiKey;
+    public string $senderID;
+    public string $specificService;
+    public string $fullRequestURL;
+    public int $id;
+    public int $retry_tidings;
+    public int $retry_interval;
 
     public function __construct(){
         if($this->configNotPublished()) {
@@ -25,6 +29,8 @@ class Tidings
         $this->baseEndPoint = config('tidings.base_endpoint');
         $this->apiKey = config('tidings.api_key');
         $this->senderID = config('tidings.sender_id');
+        $this->retry_tidings = config('tidings.retry_tidings');
+        $this->retry_interval = config('tidings.retry_interval');
     }
 
     /**
@@ -56,6 +62,18 @@ class Tidings
         }
 
         return $this->fullRequestURL;
+    }
+
+    public function checkBalance() {
+        $this->fullRequestURL = $this->getFullAPIURL("balance/sms");
+
+        $response = Http::retry($this->retry_tidings, $this->retry_interval)->get($this->fullRequestURL);
+
+        if ($response->successful()) {
+            dd($response->json('balance'));
+        } else {
+            dd("$response->body()");
+        }
     }
 
     /**

@@ -45,7 +45,7 @@
 
         /*
         |--------------------------------------------------------------------------
-        | RETRIES
+        | RETRY SENDING THE MESSAGE
         |--------------------------------------------------------------------------
         |
         | This is the number of times the package should try sending the message.
@@ -55,7 +55,7 @@
         | The default is 3; meaning the package will retry 3 times before quiting
         |
         */
-        'retries' => env('RETRY_TIDINGS', 3),
+        'retry_tidings' => env('RETRY_TIDINGS', 3),
 
         /*
         |--------------------------------------------------------------------------

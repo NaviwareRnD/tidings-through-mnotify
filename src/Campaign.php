@@ -3,6 +3,7 @@
 namespace Naviware\Tidings;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 
 class Campaign extends Tidings
@@ -40,7 +41,7 @@ class Campaign extends Tidings
 
 //        dd($fullRequestURL);
 
-        $response = Http::retry(3, 10000)
+        $response = Http::retry($this->retry_tidings, $this->retry_interval)
             ->post($fullRequestURL, [
                 'recipient' => $this->recipient,
                 'sender' => $this->getSenderID(),
@@ -50,9 +51,9 @@ class Campaign extends Tidings
             ]);
 
         if ($response->successful()) {
-            dd($response->body());
+            Log::notice($response->body());
         } else {
-            dd("Something happened");
+            Log::error($response->body());
         }
     }
 
