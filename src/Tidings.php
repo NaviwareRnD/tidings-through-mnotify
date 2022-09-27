@@ -3,60 +3,38 @@
 namespace Naviware\Tidings;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
-class Tidings
+class Tidings extends TidingsConfig
 {
-    /**
-     * Constants for the client to connect to mNotify
-    */
-    public string $baseEndPoint;
-    public string $apiKey;
-    public string $senderID;
-    public string $specificService;
-    public string $fullRequestURL;
-    public int $id;
-    public int $retry_tidings;
-    public int $retry_interval;
+    private array $recipient;
+    private array $groupID;
+//    private string $senderID;
+    private string $message;
+    private int $messageID;
+    private bool $isSchedule;
+    private string $scheduleDate;
 
-    public function __construct(){
-        if($this->configNotPublished()) {
-            return $this->warn("Please publish the config file by running: " .
-                "\"php artisan vendor:publish --tag=tidings-config\""
-            );
-        }
-
-        $this->fullRequestURL = "";
-        $this->baseEndPoint = config('tidings.base_endpoint');
-        $this->apiKey = config('tidings.api_key');
-        $this->senderID = config('tidings.sender_id');
-        $this->retry_tidings = config('tidings.retry_tidings');
-        $this->retry_interval = config('tidings.retry_interval');
-    }
-
-    /**
-     * @return bool
-     * checks if config file is published
-     */
-    public function configNotPublished(): bool
+    public function __construct()
     {
-        return is_null(config("tidings"));
+        parent::__construct();
     }
 
     /**
      * @param string $specificService
-     * @param int $id
+     * @param int $serviceID
      * @return string
      *
      * If the user passed a specific service to access, that is used in the url generation
      * If the user passed an ID then they want to access a specific item, and the URL is generated accordingly
      */
-    public function getFullAPIURL (string $specificService, int $id = 0): string
+    public function getFullAPIURL (string $specificService, int $serviceID = 0): string
     {
         $this->specificService = $specificService;
-        $this->id = $id;
+        $this->serviceID = $serviceID;
 
-        if($this->id != 0) {
-            $this->fullRequestURL = $this->baseEndPoint . $this->specificService . "/" . $this->id . "/?key=" . $this->apiKey;
+        if($this->serviceID != 0) {
+            $this->fullRequestURL = $this->baseEndPoint . $this->specificService . "/" . $this->serviceID . "/?key=" . $this->apiKey;
         } else {
             $this->fullRequestURL = $this->baseEndPoint . $this->specificService . "/?key=" . $this->apiKey;
         }
@@ -67,52 +45,115 @@ class Tidings
     public function checkBalance() {
         $this->fullRequestURL = $this->getFullAPIURL("balance/sms");
 
-        $response = Http::retry($this->retry_tidings, $this->retry_interval)->get($this->fullRequestURL);
+        $response = Http::retry($this->retryTidings, $this->retryInterval)->get($this->fullRequestURL);
 
         if ($response->successful()) {
-            dd($response->json('balance'));
+            return $response->json('balance');
         } else {
             dd("$response->body()");
         }
     }
 
     /**
-     * @return string
+     * @param array $recipient
+     * @param string $message
+     * @param bool $isSchedule
+     * @param string $scheduleDate
+     * @return void
+     *
+     * This method is used to send quick messages to individuals or groups
      */
-    public function getBaseEndPoint(): string
+    public function sendToIndividual(array $recipient, string $message, bool $isSchedule=false, string $scheduleDate='')
     {
-        return $this->baseEndPoint;
+        $this->recipient = $recipient;
+        $this->message = $message;
+        $this->isSchedule = $isSchedule;
+        $this->scheduleDate = $scheduleDate;
+
+        $fullRequestURL = $this->getFullAPIURL("sms/quick");
+
+//        dd($fullRequestURL);
+
+        $response = Http::retry($this->retryTidings, $this->retryInterval)
+            ->post($fullRequestURL, [
+                'recipient' => $this->recipient,
+                'sender' => $this->getSenderID(),
+                'message' => $this->message,
+                'isSchedule' => $this->isSchedule,
+                'scheduleDate' => $this->scheduleDate
+            ]);
+
+        if ($response->successful()) {
+            Log::notice($response->body());
+        } else {
+            Log::error($response->body());
+        }
+    }
+
+    public function sendToGroup(array $groupID, string $message, int $messageID = null, bool $isSchedule=false, string $scheduleDate='')
+    {
+        $this->groupID = $groupID;
+        $this->message = $message;
+        $this->messageID = $messageID;
+        $this->isSchedule = $isSchedule;
+        $this->scheduleDate = $scheduleDate;
+
+        $fullRequestURL = $this->getFullAPIURL("sms/group");
+
+        $response = Http::retry(3, 10000)
+            ->post($fullRequestURL, [
+                'groupID' => $this->groupID,
+                'sender' => $this->getSenderID(),
+                'message' => $this->message,
+                'messageID' => $this->messageID,
+                'isSchedule' => $this->isSchedule,
+                'scheduleDate' => $this->scheduleDate
+            ]);
+
+        if ($response->successful()) {
+            dd($response->body());
+        } else {
+            dd("Something happened");
+        }
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getApiKey(): string
+    public function getRecipient()
     {
-        return $this->apiKey;
+        return $this->recipient;
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getSenderID(): string
+    public function getSender()
     {
-        return $this->senderID;
+        return $this->sender;
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getSpecificService(): string
+    public function getMessage()
     {
-        return $this->specificService;
+        return $this->message;
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getId(): string
+    public function getIsSchedule()
     {
-        return $this->id;
+        return $this->isSchedule;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getScheduleDate()
+    {
+        return $this->scheduleDate;
     }
 }
