@@ -11,7 +11,7 @@ class InstallTidingsPackage extends Command
     protected $signature = 'tidings:install';
 
     // the description for the package
-    protected $description = 'Finalize installing the Tidings package by publishing its assets';
+    protected $description = 'Finalize installing the Tidings package by publishing its config';
 
     /**
      * @return void
