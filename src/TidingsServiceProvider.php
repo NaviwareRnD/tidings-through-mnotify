@@ -14,7 +14,8 @@
 
         //set up Artisan commands
         $this->commands([
-            Console\InstallTidingsPackage::class
+            Console\InstallTidingsPackage::class,
+            Console\SayHello::class
         ]);
     }
 

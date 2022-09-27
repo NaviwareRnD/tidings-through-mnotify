@@ -15,15 +15,30 @@ class Tidings
     private string $id;
 
     public function __construct(){
+//        $this->informToPublishConfig();
+
         $this->fullRequestURL = "";
-        $this->baseEndPoint = config('tidings.mnotify_base_endpoint');
-        $this->apiKey = config('tidings.mnotify_api_key');
-        $this->senderID = config('tidings.mnotify_sender_id');
+        $this->baseEndPoint = config('tidings.base_endpoint');
+        $this->apiKey = config('tidings.api_key');
+        $this->senderID = config('tidings.sender_id');
     }
 
-//    public static function configNotPublished() {
-//        return is_null();
-//    }
+    /**
+     * @return bool
+     * checks if config file is published
+     */
+    public function configNotPublished(): bool
+    {
+        return is_null(config("tidings"));
+    }
+
+    public function informToPublishConfig() {
+        if (self::configNotPublished()) {
+            return $this->warn("Please publish the config file by running: " .
+                "\"php artisan vendor:publish --tag=tidings-config\""
+            );
+        }
+    }
 
     /**
      * @param $specificService

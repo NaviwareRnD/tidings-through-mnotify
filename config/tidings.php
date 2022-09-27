@@ -19,7 +19,7 @@
         | The default is https://api.mnotify.com/api/
         |
         */
-        'mnotify_base_endpoint' => env('MNOTIFY_BASE_ENDPOINT', 'https://api.mnotify.com/api/'),
+        'base_endpoint' => env('MNOTIFY_BASE_ENDPOINT', 'https://api.mnotify.com/api/'),
 
         /*
         |--------------------------------------------------------------------------
@@ -30,7 +30,7 @@
         | or login to your account for a new mNotify API key.
         |
         */
-        'mnotify_api_key' => env('MNOTIFY_API_KEY', ''),
+        'api_key' => env('MNOTIFY_API_KEY', ''),
 
         /*
         |--------------------------------------------------------------------------
@@ -41,7 +41,7 @@
         | message. You can create through the platform.
         |
         */
-        'mnotify_sender_id' => env('MNOTIFY_SENDER_ID', ''),
+        'sender_id' => env('MNOTIFY_SENDER_ID', ''),
 
         /*
         |--------------------------------------------------------------------------
