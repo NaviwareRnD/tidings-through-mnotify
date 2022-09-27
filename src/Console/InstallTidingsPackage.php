@@ -74,7 +74,7 @@ class InstallTidingsPackage extends Command
     {
         $params = [
             '--provider' => "Naviware\Tidings\TidingsServiceProvider",
-            '--tag' => "tidings-config"
+//            '--tag' => "tidings-config"
         ];
 
         if ($forcePublish === true) {

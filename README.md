@@ -20,7 +20,7 @@ If you're new to Composer, here are some resources that you may find useful:
 #### Publish Configuration File
 To publish the configuration file, run the code below
 
-`php artisan vendor:publish --provider="Naviware\Tidings\TidingsServiceProvider" --tag="tidings-config"`
+`php artisan vendor:publish --provider="Naviware\Tidings\TidingsServiceProvider"`
 
 # Changelog
 Please see [CHANGELOG](https://github.com/NaviwareRnD/tidings-through-mnotify/blob/main/CHANGELOG.md) for more information on what has changed recently.
