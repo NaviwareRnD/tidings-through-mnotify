@@ -1,6 +1,6 @@
 <?php
 
-namespace Naviware\TidingsThroughMNotify\Commands;
+namespace Naviware\TidingsThroughMNotify\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
@@ -11,7 +11,7 @@ class InstallTidingsPackage extends Command
     protected $signature = 'tidings:install';
 
     // the description for the package
-    protected $description = 'Install the Tidings package';
+    protected $description = 'Finalize installing the Tidings package by publishing its assets';
 
     /**
      * @return void
@@ -25,7 +25,7 @@ class InstallTidingsPackage extends Command
 
         if (! $this->configExists('tidings.php')) {
             $this->publishConfiguration();
-            $this->info('The Config file for Tidings has been published');
+            $this->info('The config file for Tidings has been published');
         } else {
             if ($this->shouldOverwriteConfig()) {
                 $this->info('Overwriting Tidings configuration file...');
@@ -42,7 +42,7 @@ class InstallTidingsPackage extends Command
      * @param $fileName
      * @return bool
      *
-     * Checks if the Config file exists
+     * Checks if the config file exists
      */
     private function configExists($fileName)
     {
@@ -52,13 +52,13 @@ class InstallTidingsPackage extends Command
     /**
      * @return mixed
      *
-     * Confirms if the Config file should be overwritten
+     * Confirms if the config file should be overwritten
      * Default is false
      */
     private function shouldOverwriteConfig()
     {
         return $this->confirm(
-            'Config file already exists. Do you want to overwrite it?',
+            'config file already exists. Do you want to overwrite it?',
             false
         );
     }
@@ -67,14 +67,14 @@ class InstallTidingsPackage extends Command
      * @param $forcePublish
      * @return void
      *
-     * This method publishes the Config file into its folder
-     * passing true will force the Config file to be overwritten
+     * This method publishes the config file into its folder
+     * passing true will force the config file to be overwritten
      */
     private function publishConfiguration($forcePublish = false)
     {
         $params = [
             '--provider' => "Naviware\TidingsThroughMNotify\TidingsServiceProvider",
-            '--tag' => "Config"
+            '--tag' => "config"
         ];
 
         if ($forcePublish === true) {
