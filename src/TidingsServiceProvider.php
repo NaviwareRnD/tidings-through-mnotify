@@ -1,6 +1,6 @@
 <?php
 
- namespace Naviware\TidingsThroughMNotify;
+ namespace Naviware\Tidings;
 
  use Illuminate\Support\ServiceProvider;
 
@@ -12,6 +12,7 @@
             return new Tidings();
         });
 
+        //set up Artisan commands
         $this->commands([
             Console\InstallTidingsPackage::class
         ]);
@@ -19,13 +20,12 @@
 
     public function boot()
     {
-//        dd(__DIR__ . '/../config/tidings.php');
         //This publishes the package's config file for use to the application's config directory
         // for user customization. This only works if the package is booted from the console
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/../config/tidings.php' => config_path('tidings.php')
-            ]);
+            ], "config");
         }
     }
  }

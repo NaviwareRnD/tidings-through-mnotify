@@ -1,6 +1,6 @@
 <?php
 
-namespace Naviware\TidingsThroughMNotify\Facades;
+namespace Naviware\Tidings\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

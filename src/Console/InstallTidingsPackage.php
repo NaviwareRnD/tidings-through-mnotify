@@ -1,6 +1,6 @@
 <?php
 
-namespace Naviware\TidingsThroughMNotify\Console;
+namespace Naviware\Tidings\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
@@ -73,7 +73,7 @@ class InstallTidingsPackage extends Command
     private function publishConfiguration($forcePublish = false)
     {
         $params = [
-            '--provider' => "Naviware\TidingsThroughMNotify\TidingsServiceProvider",
+            '--provider' => "Naviware\Tidings\TidingsServiceProvider",
             '--tag' => "tidings-config"
         ];
 

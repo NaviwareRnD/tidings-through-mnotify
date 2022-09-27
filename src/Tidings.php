@@ -1,6 +1,6 @@
 <?php
 
-namespace Naviware\TidingsThroughMNotify;
+namespace Naviware\Tidings;
 
 class Tidings
 {

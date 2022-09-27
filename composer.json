@@ -20,7 +20,7 @@
       ],
     "autoload": {
         "psr-4": {
-            "Naviware\\TidingsThroughMNotify\\": "src/"
+            "Naviware\\Tidings\\": "src/"
         }
     },
     "minimum-stability": "dev",
@@ -32,10 +32,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Naviware\\TidingsThroughMNotify\\TidingsServiceProvider"
+                "Naviware\\Tidings\\TidingsServiceProvider"
             ],
             "aliases": {
-                "Tidings": "Naviware\\TidingsThroughMNotify\\Facades\\Tidings"
+                "Tidings": "Naviware\\Tidings\\Facades\\Tidings"
             }
         }
     }
