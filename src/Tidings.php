@@ -15,6 +15,12 @@ class Tidings
     private string $id;
 
     public function __construct(){
+        if($this->configNotPublished()) {
+            return $this->warn("Please publish the config file by running: " .
+                "\"php artisan vendor:publish --tag=tidings-config\""
+            );
+        }
+
         $this->fullRequestURL = "";
         $this->baseEndPoint = config('tidings.base_endpoint');
         $this->apiKey = config('tidings.api_key');
@@ -29,14 +35,14 @@ class Tidings
     {
         return is_null(config("tidings"));
     }
-
-    public function informToPublishConfig() {
-        if (self::configNotPublished()) {
-            return $this->warn("Please publish the config file by running: " .
-                "\"php artisan vendor:publish --tag=tidings-config\""
-            );
-        }
-    }
+//
+//    public function informToPublishConfig() {
+//        if (self::configNotPublished()) {
+//            return $this->warn("Please publish the config file by running: " .
+//                "\"php artisan vendor:publish --tag=tidings-config\""
+//            );
+//        }
+//    }
 
     /**
      * @param $specificService
