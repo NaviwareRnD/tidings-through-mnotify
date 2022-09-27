@@ -15,8 +15,6 @@
         $this->commands([
             Console\InstallTidingsPackage::class
         ]);
-
-        //$this->mergeConfigFrom(__DIR__ . '/../config/tidings.php', 'tidings');
     }
 
     public function boot()

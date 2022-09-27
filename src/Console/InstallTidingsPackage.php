@@ -19,9 +19,9 @@ class InstallTidingsPackage extends Command
      */
     public function handle()
     {
-        $this->info('Installing Tidings...');
+        $this->info('Finalizing Tidings installation...');
 
-        $this->info('Publishing configuration...');
+        $this->info('Publishing configuration file...');
 
         if (! $this->configExists('tidings.php')) {
             $this->publishConfiguration();
@@ -35,7 +35,7 @@ class InstallTidingsPackage extends Command
             }
         }
 
-        $this->info('Installed Tidings package');
+        $this->info('Successfully installed Tidings package');
     }
 
     /**
@@ -74,7 +74,7 @@ class InstallTidingsPackage extends Command
     {
         $params = [
             '--provider' => "Naviware\TidingsThroughMNotify\TidingsServiceProvider",
-            '--tag' => "config"
+            '--tag' => "tidings-config"
         ];
 
         if ($forcePublish === true) {
