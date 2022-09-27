@@ -25,7 +25,7 @@ class InstallTidingsPackage extends Command
 
         if (! $this->configExists('tidings.php')) {
             $this->publishConfiguration();
-            $this->info('The config file for Tidings has been published');
+            $this->info('The Config file for Tidings has been published');
         } else {
             if ($this->shouldOverwriteConfig()) {
                 $this->info('Overwriting Tidings configuration file...');
@@ -42,7 +42,7 @@ class InstallTidingsPackage extends Command
      * @param $fileName
      * @return bool
      *
-     * Checks if the config file exists
+     * Checks if the Config file exists
      */
     private function configExists($fileName)
     {
@@ -52,7 +52,7 @@ class InstallTidingsPackage extends Command
     /**
      * @return mixed
      *
-     * Confirms if the config file should be overwritten
+     * Confirms if the Config file should be overwritten
      * Default is false
      */
     private function shouldOverwriteConfig()
@@ -67,14 +67,14 @@ class InstallTidingsPackage extends Command
      * @param $forcePublish
      * @return void
      *
-     * This method publishes the config file into its folder
-     * passing true will force the config file to be overwritten
+     * This method publishes the Config file into its folder
+     * passing true will force the Config file to be overwritten
      */
     private function publishConfiguration($forcePublish = false)
     {
         $params = [
             '--provider' => "Naviware\TidingsThroughMNotify\TidingsServiceProvider",
-            '--tag' => "config"
+            '--tag' => "Config"
         ];
 
         if ($forcePublish === true) {

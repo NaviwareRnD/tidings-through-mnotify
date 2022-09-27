@@ -12,21 +12,18 @@
             return new Tidings();
         });
 
-        $this->mergeConfigFrom(
-            __DIR__.'/config/tidings.php', 'tidings'
-        );
+        $this->mergeConfigFrom(__DIR__ . '/../Config/tidings.php', 'tidings');
     }
 
     public function boot()
     {
-        //This publishes the package's config file for use to the application's config directory
+        //This publishes the package's Config file for use to the application's Config directory
         // for user customization. This only works if the package is booted from the console
-        if ($this->app->runningInConsole()) {
+//        if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/config/config.php' => config_path('tidings.php')
+                __DIR__ . '/../Config/tidings.php' => config_path('tidings.php')
             ]);
-
-        }
+//        }
     }
  }
 
