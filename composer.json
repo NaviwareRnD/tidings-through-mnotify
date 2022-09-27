@@ -30,6 +30,9 @@
         "illuminate/support": "^v8.83.24"
     },
     "scripts": {
+        "post-package-install": [
+            "@php artisan vendor:publish --tag=tidings-config"
+        ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=tidings-config"
         ]
