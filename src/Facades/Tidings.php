@@ -11,7 +11,7 @@ class Tidings extends Facade
 {
     protected static function getFacadeAccessor()
     {
-//        return \TidingsThroughMNotify\Package\Facades\Tidings::;
+        //
     }
 }
 

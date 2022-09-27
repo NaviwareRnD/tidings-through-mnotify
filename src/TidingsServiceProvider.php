@@ -13,7 +13,7 @@
         });
 
         $this->mergeConfigFrom(
-            __DIR__.'/../config/tidings.php', 'tidings'
+            __DIR__.'/config/tidings.php', 'tidings'
         );
     }
 
@@ -23,7 +23,7 @@
         // for user customization. This only works if the package is booted from the console
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../config/config.php' => config_path('tidings.php'),
+                __DIR__.'/config/config.php' => config_path('tidings.php')
             ]);
 
         }
