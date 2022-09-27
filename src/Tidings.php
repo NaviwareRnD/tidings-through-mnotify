@@ -12,7 +12,7 @@ class Tidings
     private string $senderID;
     private string $specificService;
     private string $fullRequestURL;
-    private string $id;
+    private int $id;
 
     public function __construct(){
         if($this->configNotPublished()) {
@@ -35,29 +35,21 @@ class Tidings
     {
         return is_null(config("tidings"));
     }
-//
-//    public function informToPublishConfig() {
-//        if (self::configNotPublished()) {
-//            return $this->warn("Please publish the config file by running: " .
-//                "\"php artisan vendor:publish --tag=tidings-config\""
-//            );
-//        }
-//    }
 
     /**
-     * @param $specificService
-     * @param $id
+     * @param string $specificService
+     * @param int $id
      * @return string
      *
      * If the user passed a specific service to access, that is used in the url generation
      * If the user passed an ID then they want to access a specific item, and the URL is generated accordingly
      */
-    public function getFullAPIURL ($specificService, $id = null): string
+    public function getFullAPIURL (string $specificService, int $id = 0): string
     {
         $this->specificService = $specificService;
         $this->id = $id;
 
-        if($this->id != null) {
+        if($this->id != 0) {
             $this->fullRequestURL = $this->baseEndPoint . $this->specificService . "/" . $this->id . "/?key=" . $this->apiKey;
         } else {
             $this->fullRequestURL = $this->baseEndPoint . $this->specificService . "/?key=" . $this->apiKey;

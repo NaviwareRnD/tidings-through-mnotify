@@ -7,17 +7,17 @@ use Illuminate\Support\Facades\Http;
 
 class Campaign extends Tidings
 {
-    private $recipient;
-    private $group_id;
-    private $sender;
-    private $message;
-    private $message_id;
-    private $is_schedule;
-    private $schedule_date;
+    private array $recipient;
+    private int $group_id;
+    private string $sender;
+    private string $message;
+    private int $message_id;
+    private bool $is_schedule;
+    private string $schedule_date;
 
     public function __construct()
     {
-        $this->sender = $this->getSenderID();
+        parent::__construct();
     }
 
     /**
@@ -43,7 +43,7 @@ class Campaign extends Tidings
         $response = Http::retry(3, 10000)
             ->post($fullRequestURL, [
                 'recipient' => $this->recipient,
-                'sender' => $this->sender,
+                'sender' => $this->getSenderID(),
                 'message' => $this->message,
                 'is_schedule' => $this->is_schedule,
                 'schedule_date' => $this->schedule_date
@@ -69,7 +69,7 @@ class Campaign extends Tidings
         $response = Http::retry(3, 10000)
             ->post($fullRequestURL, [
                 'group_id' => $this->group_id,
-                'sender' => $this->sender,
+                'sender' => $this->getSenderID(),
                 'message' => $this->message,
                 'message_id' => $this->message_id,
                 'is_schedule' => $this->is_schedule,
