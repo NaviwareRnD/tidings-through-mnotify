@@ -1,4 +1,4 @@
-# Tidings Through mNotify
+# Tidings
 This package is for sending SMS notifications programmatically through mNotify. To use the package in your PHP (or Laravel)
 application, you need to an [mNotify account](https://www.mnotify.com/).
 

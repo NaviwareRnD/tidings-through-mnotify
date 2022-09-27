@@ -1,5 +1,5 @@
 {
-    "name": "naviware/tidings-through-mnotify",
+    "name": "naviware/tidings",
     "description": "This package is for sending SMS notifications programmatically through the mNotify platform",
     "license": "MIT",
     "keywords": [
@@ -14,7 +14,7 @@
         {
           "name": "Naviware Research & Development",
           "email": "teamserviceskeep@gmail.com",
-            "homepage": "https://www.packages.naviware.io/tidings-through-mnotify/",
+            "homepage": "https://www.packages.naviware.io/tidings/",
             "role": "Package Manager"
         }
       ],

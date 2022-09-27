@@ -21,6 +21,10 @@ class Tidings
         $this->senderID = config('tidings.mnotify_sender_id');
     }
 
+//    public static function configNotPublished() {
+//        return is_null();
+//    }
+
     /**
      * @param $specificService
      * @param $id

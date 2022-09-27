@@ -25,7 +25,7 @@
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/../config/tidings.php' => config_path('tidings.php')
-            ], "config");
+            ], "tidings-config");
         }
     }
  }
