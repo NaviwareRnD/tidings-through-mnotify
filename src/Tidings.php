@@ -7,17 +7,46 @@ use Illuminate\Support\Facades\Log;
 
 class Tidings extends TidingsConfig
 {
-    private array $recipient;
-    private array $groupID;
-//    private string $senderID;
-    private string $message;
-    private int $messageID;
-    private bool $isSchedule;
-    private string $scheduleDate;
+    protected array $recipient;
+    protected array $groupID;
+    protected string $senderID;
+    protected string $message;
+    protected int $messageID;
+    protected bool $isSchedule;
+    protected string $scheduleDate;
 
-    public function __construct()
+
+    public function __construct($message = [])
     {
         parent::__construct();
+
+        $this->message = $message;
+
+        return $this;
+    }
+
+    public function from($from)
+    {
+        //check if there is a new sender details. If there is
+        // then use that. If not, use the set senderID in the
+        // config
+        $this->senderID = $from ?: $this->senderID;
+
+        return $this;
+    }
+
+    public function to($to)
+    {
+        $this->to = $to;
+
+        return $this;
+    }
+
+    public function message($message = '')
+    {
+        $this->message = $message;
+
+        return $this;
     }
 
     /**
@@ -42,6 +71,10 @@ class Tidings extends TidingsConfig
         return $this->fullRequestURL;
     }
 
+    /**
+     * @return void
+     *  get the balance in the account
+     */
     public function checkBalance() {
         $this->fullRequestURL = $this->getFullAPIURL("balance/sms");
 

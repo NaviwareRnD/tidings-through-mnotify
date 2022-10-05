@@ -7,14 +7,14 @@ class TidingsConfig
     /**
      * Constants for the client to connect to mNotify
     */
-    public string $baseEndPoint;
-    public string $apiKey;
-    public string $senderID;
-    public string $specificService;
-    public string $fullRequestURL;
-    public int $serviceID;
-    public int $retryTidings;
-    public int $retryInterval;
+    protected string $baseEndPoint;
+    protected string $apiKey;
+    protected string $senderID;
+    protected string $specificService;
+    protected string $fullRequestURL;
+    protected int $serviceID;
+    protected int $retryTidings;
+    protected int $retryInterval;
 
     public function __construct(){
         if($this->configNotPublished()) {
@@ -27,7 +27,7 @@ class TidingsConfig
         $this->baseEndPoint = config('tidings.base_endpoint');
         $this->apiKey = config('tidings.api_key');
         $this->senderID = config('tidings.sender_id');
-        $this->retryTidings = config('tidings.retryTidings');
+        $this->retryTidings = config('tidings.retry_tidings');
         $this->retryInterval = config('tidings.retry_interval');
     }
 
