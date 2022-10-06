@@ -107,7 +107,7 @@ class Tidings extends TidingsConfig
      */
     public function send()
     {
-        if (!$this->senderID || !$this->recipient || !count($this->message) || !$this->isSchedule || !$this->scheduleDate) {
+        if (!$this->senderID || !$this->recipient || !$this->message || !$this->isSchedule || !$this->scheduleDate) {
             throw new \Exception('SMS not correct.');
         }
 
