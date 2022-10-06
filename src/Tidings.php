@@ -109,8 +109,10 @@ class Tidings extends TidingsConfig
      */
     public function send()
     {
-        if (!$this->senderID || !$this->recipient || !$this->message || !$this->isSchedule || !$this->scheduleDate) {
-            throw new \Exception('SMS not correct.');
+        //dd(print_r($this->recipient))
+//        dd($this->senderID . "; " . $this->message . "; " . $this->isSchedule . "; " . $this->scheduleDate);
+        if (!$this->senderID || !$this->recipient || !$this->message) {
+            throw new \Exception('Something is wrong.');
         }
 
         $fullRequestURL = $this->getFullAPIURL("sms/quick");
@@ -208,6 +210,10 @@ class Tidings extends TidingsConfig
 //        }
 //    }
 
+    public function validateCore()
+    {
+        //if (!)
+    }
     /**
      * @return mixed
      */
