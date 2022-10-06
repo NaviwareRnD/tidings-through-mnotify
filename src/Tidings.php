@@ -16,7 +16,7 @@ class Tidings extends TidingsConfig
     protected string $scheduleDate;
 
 
-    public function __construct($message = [])
+    public function __construct($message = '')
     {
         parent::__construct();
 
@@ -124,6 +124,20 @@ class Tidings extends TidingsConfig
 
         if ($response->successful()) {
             Log::notice($response->body());
+        } else {
+            Log::error($response->body());
+        }
+    }
+
+    public function getAllMessageTemplates() {
+        $fullRequestURL = $this->getFullAPIURL("template");
+
+//        dd($fullRequestURL);
+
+        $response = Http::get($fullRequestURL);
+
+        if ($response->successful()) {
+            return $response->body();
         } else {
             Log::error($response->body());
         }
