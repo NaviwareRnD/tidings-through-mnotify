@@ -16,11 +16,13 @@ class Tidings extends TidingsConfig
     protected string $scheduleDate;
 
 
-    public function __construct($message = '')
+    public function __construct()
     {
         parent::__construct();
 
-        $this->message = $message;
+        $this->message = "";
+        $this->isSchedule = "";
+        $this->scheduleDate = "";
 
         return $this;
     }
@@ -42,7 +44,7 @@ class Tidings extends TidingsConfig
         return $this;
     }
 
-    public function message(string $message = ''): static
+    public function message(string $message = ""): static
     {
         $this->message = $message;
 
