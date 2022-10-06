@@ -25,7 +25,7 @@ class Tidings extends TidingsConfig
         return $this;
     }
 
-    public function from($from)
+    public function from($from): static
     {
         //check if there is a new sender details. If there is
         // then use that. If not, use the set senderID in the
@@ -35,16 +35,30 @@ class Tidings extends TidingsConfig
         return $this;
     }
 
-    public function to($to)
+    public function to(array $to): static
     {
-        $this->to = $to;
+        $this->recipient = $to;
 
         return $this;
     }
 
-    public function message($message = '')
+    public function message(string $message = ''): static
     {
         $this->message = $message;
+
+        return $this;
+    }
+
+    public function schedule(bool $isSchedule = false): static
+    {
+        $this->isSchedule = $isSchedule;
+
+        return $this;
+    }
+
+    public function sendOn(string $scheduleDate=''): static
+    {
+        $this->scheduleDate = $scheduleDate;
 
         return $this;
     }
@@ -72,10 +86,11 @@ class Tidings extends TidingsConfig
     }
 
     /**
-     * @return void
+     * @return mixed
      *  get the balance in the account
      */
-    public function checkBalance() {
+    public function checkBalance()
+    {
         $this->fullRequestURL = $this->getFullAPIURL("balance/sms");
 
         $response = Http::retry($this->retryTidings, $this->retryInterval)->get($this->fullRequestURL);
@@ -83,34 +98,25 @@ class Tidings extends TidingsConfig
         if ($response->successful()) {
             return $response->json('balance');
         } else {
-            dd("$response->body()");
+            Log::error($response->body());
         }
     }
 
     /**
-     * @param array $recipient
-     * @param string $message
-     * @param bool $isSchedule
-     * @param string $scheduleDate
-     * @return void
-     *
-     * This method is used to send quick messages to individuals or groups
+     * @throws \Exception
      */
-    public function sendToIndividual(array $recipient, string $message, bool $isSchedule=false, string $scheduleDate='')
+    public function send()
     {
-        $this->recipient = $recipient;
-        $this->message = $message;
-        $this->isSchedule = $isSchedule;
-        $this->scheduleDate = $scheduleDate;
+        if (!$this->senderID || !$this->recipient || !count($this->message) || !$this->isSchedule || !$this->scheduleDate) {
+            throw new \Exception('SMS not correct.');
+        }
 
         $fullRequestURL = $this->getFullAPIURL("sms/quick");
-
-//        dd($fullRequestURL);
 
         $response = Http::retry($this->retryTidings, $this->retryInterval)
             ->post($fullRequestURL, [
                 'recipient' => $this->recipient,
-                'sender' => $this->getSenderID(),
+                'sender' => $this->senderID,
                 'message' => $this->message,
                 'isSchedule' => $this->isSchedule,
                 'scheduleDate' => $this->scheduleDate
@@ -123,32 +129,68 @@ class Tidings extends TidingsConfig
         }
     }
 
-    public function sendToGroup(array $groupID, string $message, int $messageID = null, bool $isSchedule=false, string $scheduleDate='')
-    {
-        $this->groupID = $groupID;
-        $this->message = $message;
-        $this->messageID = $messageID;
-        $this->isSchedule = $isSchedule;
-        $this->scheduleDate = $scheduleDate;
-
-        $fullRequestURL = $this->getFullAPIURL("sms/group");
-
-        $response = Http::retry(3, 10000)
-            ->post($fullRequestURL, [
-                'groupID' => $this->groupID,
-                'sender' => $this->getSenderID(),
-                'message' => $this->message,
-                'messageID' => $this->messageID,
-                'isSchedule' => $this->isSchedule,
-                'scheduleDate' => $this->scheduleDate
-            ]);
-
-        if ($response->successful()) {
-            dd($response->body());
-        } else {
-            dd("Something happened");
-        }
-    }
+//    /**
+//     * @param array $recipient
+//     * @param string $message
+//     * @param bool $isSchedule
+//     * @param string $scheduleDate
+//     * @return void
+//     *
+//     * This method is used to send quick messages to individuals or groups
+//     */
+//    public function sendToIndividual(array $recipient, string $message, bool $isSchedule=false, string $scheduleDate=''): void
+//    {
+//        $this->recipient = $recipient;
+//        $this->message = $message;
+//        $this->isSchedule = $isSchedule;
+//        $this->scheduleDate = $scheduleDate;
+//
+//        $fullRequestURL = $this->getFullAPIURL("sms/quick");
+//
+////        dd($fullRequestURL);
+//
+//        $response = Http::retry($this->retryTidings, $this->retryInterval)
+//            ->post($fullRequestURL, [
+//                'recipient' => $this->recipient,
+//                'sender' => $this->getSenderID(),
+//                'message' => $this->message,
+//                'isSchedule' => $this->isSchedule,
+//                'scheduleDate' => $this->scheduleDate
+//            ]);
+//
+//        if ($response->successful()) {
+//            Log::notice($response->body());
+//        } else {
+//            Log::error($response->body());
+//        }
+//    }
+//
+//    public function sendToGroup(array $groupID, string $message, int $messageID = null, bool $isSchedule=false, string $scheduleDate='')
+//    {
+//        $this->groupID = $groupID;
+//        $this->message = $message;
+//        $this->messageID = $messageID;
+//        $this->isSchedule = $isSchedule;
+//        $this->scheduleDate = $scheduleDate;
+//
+//        $fullRequestURL = $this->getFullAPIURL("sms/group");
+//
+//        $response = Http::retry(3, 10000)
+//            ->post($fullRequestURL, [
+//                'groupID' => $this->groupID,
+//                'sender' => $this->getSenderID(),
+//                'message' => $this->message,
+//                'messageID' => $this->messageID,
+//                'isSchedule' => $this->isSchedule,
+//                'scheduleDate' => $this->scheduleDate
+//            ]);
+//
+//        if ($response->successful()) {
+//            dd($response->body());
+//        } else {
+//            dd("Something happened");
+//        }
+//    }
 
     /**
      * @return mixed
