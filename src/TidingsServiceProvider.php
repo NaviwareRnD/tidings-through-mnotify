@@ -2,9 +2,21 @@
 
  namespace Naviware\Tidings;
 
+ use Illuminate\Support\Facades\Notification;
  use Illuminate\Support\ServiceProvider;
+ use Illuminate\Notifications\ChannelManager;
 
  class TidingsServiceProvider extends ServiceProvider {
+
+
+     /**
+      * All the package singletons that should be registered
+      * @var
+      */
+     public array $singletons = [
+         'tidings' => TidingsChannel::class,
+     ];
+
     public function register()
     {
         // Register a class in the service container
@@ -17,6 +29,12 @@
             Console\InstallTidingsPackage::class,
 //            Console\SayHello::class
         ]);
+
+        Notification::resolved(function (ChannelManager $service) {
+            $service->extend('tidings', function ($app) {
+                return $app->make('tidings');
+            });
+        });
     }
 
     public function boot()
