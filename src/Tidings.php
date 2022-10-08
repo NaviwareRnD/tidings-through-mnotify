@@ -37,7 +37,7 @@ class Tidings extends TidingsConfig
         return $this;
     }
 
-    public function to(array $to): static
+    public function to($to): static
     {
         $this->recipient = $to;
 
