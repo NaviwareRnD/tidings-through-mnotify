@@ -24,7 +24,7 @@ class TidingsChannel
         //toTidings() returns an instance of TidingsMessage class
         $message = $notification->toTidings($notifiable);
 
-        dd($message);
+//        dd($message);
 
         // Send notification to the $notifiable instance...
         $message->send();

@@ -15,7 +15,6 @@ class Tidings extends TidingsConfig
     protected bool $isSchedule;
     protected string $scheduleDate;
 
-
     public function __construct()
     {
         parent::__construct();
