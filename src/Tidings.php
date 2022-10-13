@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Log;
 class Tidings extends TidingsConfig
 {
     protected array $recipient;
-    protected array $groupID;
+    protected int $groupID;
     protected string $senderID;
     protected string $message;
     protected int $messageID;
@@ -20,8 +20,10 @@ class Tidings extends TidingsConfig
         parent::__construct();
 
         $this->message = "";
-        $this->isSchedule = "";
+        $this->isSchedule = false;
         $this->scheduleDate = "";
+        $this->messageID = -1;
+        $this->groupID = '';
 
         return $this;
     }

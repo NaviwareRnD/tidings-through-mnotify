@@ -2,14 +2,11 @@
 
 namespace Naviware\Tidings;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class TidingsChannel
 {
-    use Queueable;
 
     /**
      * Send the given notification.
