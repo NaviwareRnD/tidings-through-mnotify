@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\File;
 class InstallTidingsPackage extends Command
 {
     //the command the user will use to publish the packages files
-    protected string $signature = 'tidings:install';
+    protected $signature = 'tidings:install';
 
     // the description for the package
-    protected string $description = 'Finalize installing the Tidings package by publishing its config';
+    protected $description = 'Finalize installing the Tidings package by publishing its config';
 
     /**
      * @return void

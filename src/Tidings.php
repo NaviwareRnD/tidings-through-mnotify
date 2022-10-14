@@ -23,12 +23,12 @@ class Tidings extends TidingsConfig
         $this->isSchedule = false;
         $this->scheduleDate = "";
         $this->messageID = -1;
-        $this->groupID = '';
+        $this->groupID = -1;
 
         return $this;
     }
 
-    public function from($from): static
+    public function from(string $from): static
     {
         //check if there is a new sender details. If there is
         // then use that. If not, use the set senderID in the
@@ -38,7 +38,7 @@ class Tidings extends TidingsConfig
         return $this;
     }
 
-    public function to($to): static
+    public function to(array $to): static
     {
         $this->recipient = $to;
 
@@ -122,8 +122,8 @@ class Tidings extends TidingsConfig
                 'recipient' => $this->recipient,
                 'sender' => $this->senderID,
                 'message' => $this->message,
-                'isSchedule' => $this->isSchedule,
-                'scheduleDate' => $this->scheduleDate
+//                'isSchedule' => $this->isSchedule,
+//                'scheduleDate' => $this->scheduleDate
             ]);
 
         if ($response->successful()) {
@@ -158,7 +158,7 @@ class Tidings extends TidingsConfig
      */
     public function getSender(): string
     {
-        return $this->sender;
+        return $this->senderID;
     }
 
     /**
