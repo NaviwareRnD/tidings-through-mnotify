@@ -5,7 +5,7 @@
      * API KEY
      * SENDER ID
      * ACCOUNT NAME
-     * RETRY
+     * RETRY (number of times to retry sending message)
      * RETRY INTERVAL (in seconds)
     **/
 
@@ -71,4 +71,3 @@
         'retry_interval' => env('RETRY_TIDINGS_INTERVAL', 5000)
     ];
 
-?>

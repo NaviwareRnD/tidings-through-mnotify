@@ -2,7 +2,7 @@
 
 namespace Naviware\Tidings;
 
-use Illuminate\Notifications\Messages\MailMessage;
+//use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class TidingsChannel
@@ -15,7 +15,7 @@ class TidingsChannel
      * @param  \Illuminate\Notifications\Notification  $notification
      * @return void
      */
-    public function send($notifiable, Notification $notification)
+    public function send(mixed $notifiable, Notification $notification): void
     {
         //get instance of user or notifiable
         //toTidings() returns an instance of TidingsMessage class

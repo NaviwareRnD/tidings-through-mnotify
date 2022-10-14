@@ -7,8 +7,6 @@
  use Illuminate\Notifications\ChannelManager;
 
  class TidingsServiceProvider extends ServiceProvider {
-
-
      /**
       * All the package singletons that should be registered
       * @var
@@ -30,6 +28,7 @@
 //            Console\SayHello::class
         ]);
 
+        //map the channel to the package
         Notification::resolved(function (ChannelManager $service) {
             $service->extend('tidings', function ($app) {
                 return $app->make('tidings');

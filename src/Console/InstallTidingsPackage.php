@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\File;
 class InstallTidingsPackage extends Command
 {
     //the command the user will use to publish the packages files
-    protected $signature = 'tidings:install';
+    protected string $signature = 'tidings:install';
 
     // the description for the package
-    protected $description = 'Finalize installing the Tidings package by publishing its config';
+    protected string $description = 'Finalize installing the Tidings package by publishing its config';
 
     /**
      * @return void
@@ -44,7 +44,7 @@ class InstallTidingsPackage extends Command
      *
      * Checks if the config file exists
      */
-    private function configExists($fileName)
+    private function configExists($fileName): bool
     {
         return File::exists(config_path($fileName));
     }
@@ -55,7 +55,7 @@ class InstallTidingsPackage extends Command
      * Confirms if the config file should be overwritten
      * Default is false
      */
-    private function shouldOverwriteConfig()
+    private function shouldOverwriteConfig(): mixed
     {
         return $this->confirm(
             'config file already exists. Do you want to overwrite it?',
@@ -64,13 +64,13 @@ class InstallTidingsPackage extends Command
     }
 
     /**
-     * @param $forcePublish
+     * @param bool $forcePublish
      * @return void
      *
      * This method publishes the config file into its folder
      * passing true will force the config file to be overwritten
      */
-    private function publishConfiguration($forcePublish = false)
+    private function publishConfiguration(bool $forcePublish = false): void
     {
         $params = [
             '--provider' => "Naviware\Tidings\TidingsServiceProvider",
@@ -85,4 +85,3 @@ class InstallTidingsPackage extends Command
     }
 }
 
-?>

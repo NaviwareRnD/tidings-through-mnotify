@@ -89,20 +89,21 @@ class Tidings extends TidingsConfig
     }
 
     /**
-     * @return mixed
+     * @return int
      *  get the balance in the account
      */
-    public function checkBalance()
+    public function checkBalance(): int
     {
         $this->fullRequestURL = $this->getFullAPIURL("balance/sms");
 
-        $response = Http::retry($this->retryTidings, $this->retryInterval)->get($this->fullRequestURL);
+        $response = Http::retry($this->retryTidings, $this->retryInterval)
+                                ->get($this->fullRequestURL);
 
         if ($response->successful()) {
-            return $response->json('balance');
-        } else {
             Log::error($response->body());
         }
+
+        return $response->json('balance');
     }
 
     /**
@@ -110,8 +111,6 @@ class Tidings extends TidingsConfig
      */
     public function send()
     {
-        //dd(print_r($this->recipient))
-//        dd($this->senderID . "; " . $this->message . "; " . $this->isSchedule . "; " . $this->scheduleDate);
         if (!$this->senderID || !$this->recipient || !$this->message) {
             throw new \Exception('Something is wrong.');
         }
@@ -137,88 +136,19 @@ class Tidings extends TidingsConfig
     public function getAllMessageTemplates() {
         $fullRequestURL = $this->getFullAPIURL("template");
 
-//        dd($fullRequestURL);
-
         $response = Http::get($fullRequestURL);
 
-        if ($response->successful()) {
-            return $response->body();
-        } else {
+        if (!$response->successful()) {
             Log::error($response->body());
         }
+
+        return $response->body();
     }
 
-//    /**
-//     * @param array $recipient
-//     * @param string $message
-//     * @param bool $isSchedule
-//     * @param string $scheduleDate
-//     * @return void
-//     *
-//     * This method is used to send quick messages to individuals or groups
-//     */
-//    public function sendToIndividual(array $recipient, string $message, bool $isSchedule=false, string $scheduleDate=''): void
-//    {
-//        $this->recipient = $recipient;
-//        $this->message = $message;
-//        $this->isSchedule = $isSchedule;
-//        $this->scheduleDate = $scheduleDate;
-//
-//        $fullRequestURL = $this->getFullAPIURL("sms/quick");
-//
-////        dd($fullRequestURL);
-//
-//        $response = Http::retry($this->retryTidings, $this->retryInterval)
-//            ->post($fullRequestURL, [
-//                'recipient' => $this->recipient,
-//                'sender' => $this->getSenderID(),
-//                'message' => $this->message,
-//                'isSchedule' => $this->isSchedule,
-//                'scheduleDate' => $this->scheduleDate
-//            ]);
-//
-//        if ($response->successful()) {
-//            Log::notice($response->body());
-//        } else {
-//            Log::error($response->body());
-//        }
-//    }
-//
-//    public function sendToGroup(array $groupID, string $message, int $messageID = null, bool $isSchedule=false, string $scheduleDate='')
-//    {
-//        $this->groupID = $groupID;
-//        $this->message = $message;
-//        $this->messageID = $messageID;
-//        $this->isSchedule = $isSchedule;
-//        $this->scheduleDate = $scheduleDate;
-//
-//        $fullRequestURL = $this->getFullAPIURL("sms/group");
-//
-//        $response = Http::retry(3, 10000)
-//            ->post($fullRequestURL, [
-//                'groupID' => $this->groupID,
-//                'sender' => $this->getSenderID(),
-//                'message' => $this->message,
-//                'messageID' => $this->messageID,
-//                'isSchedule' => $this->isSchedule,
-//                'scheduleDate' => $this->scheduleDate
-//            ]);
-//
-//        if ($response->successful()) {
-//            dd($response->body());
-//        } else {
-//            dd("Something happened");
-//        }
-//    }
-
-    public function validateCore()
-    {
-        //if (!)
-    }
     /**
-     * @return mixed
+     * @return array
      */
-    public function getRecipient()
+    public function getRecipient(): array
     {
         return $this->recipient;
     }
@@ -226,7 +156,7 @@ class Tidings extends TidingsConfig
     /**
      * @return mixed
      */
-    public function getSender()
+    public function getSender(): string
     {
         return $this->sender;
     }
@@ -234,7 +164,7 @@ class Tidings extends TidingsConfig
     /**
      * @return mixed
      */
-    public function getMessage()
+    public function getMessage(): string
     {
         return $this->message;
     }
@@ -242,7 +172,7 @@ class Tidings extends TidingsConfig
     /**
      * @return mixed
      */
-    public function getIsSchedule()
+    public function getIsSchedule(): bool
     {
         return $this->isSchedule;
     }
@@ -250,7 +180,7 @@ class Tidings extends TidingsConfig
     /**
      * @return mixed
      */
-    public function getScheduleDate()
+    public function getScheduleDate(): string
     {
         return $this->scheduleDate;
     }
