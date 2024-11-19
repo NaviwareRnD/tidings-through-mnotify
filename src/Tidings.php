@@ -4,9 +4,8 @@ namespace Naviware\Tidings;
 
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Contracts\Notification\Factory as NotificationFactory;
 
-class Tidings extends TidingsConfig implements NotificationFactory
+class Tidings extends TidingsConfig
 {
     protected array $recipient;
     protected int $groupID;
