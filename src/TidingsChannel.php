@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notification;
 class TidingsChannel
 {
 
+    
     /**
      * Send the given notification.
      *

@@ -55,7 +55,7 @@
         | The default is 3; meaning the package will retry 3 times before quiting
         |
         */
-        'retry_tidings' => env('RETRY_TIDINGS', 3),
+        'retry_tidings' => env('TIDINGS_RETRY', 3),
 
         /*
         |--------------------------------------------------------------------------
@@ -68,6 +68,6 @@
         | The default is 3; meaning the package will retry 3 times before quiting
         |
         */
-        'retry_interval' => env('RETRY_TIDINGS_INTERVAL', 5000)
+        'retry_interval' => env('TIDINGS_RETRY_INTERVAL', 5000)
     ];
 

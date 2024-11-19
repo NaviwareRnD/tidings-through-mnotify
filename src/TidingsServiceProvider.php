@@ -15,6 +15,15 @@
          'tidings' => TidingsChannel::class,
      ];
 
+    /**
+     * Register bindings in the service container and set up Artisan commands.
+     * 
+     * This method binds the 'tidings' class to the service container, sets up
+     * Artisan commands for the package, and maps the 'tidings' channel to the 
+     * Notification channel manager.
+     * 
+     * @return void
+     */
     public function register()
     {
         // Register a class in the service container
@@ -36,10 +45,17 @@
         });
     }
 
+    /**
+     * Configure the package
+     *
+     * When the application is running in the console, publish the config
+     * file. This is the file that contains all the configuration for the
+     * package.
+     *
+     * @return void
+     */
     public function boot()
     {
-        //This publishes the package's config file for use to the application's config directory
-        // for user customization. This only works if the package is booted from the console
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/../config/tidings.php' => config_path('tidings.php')

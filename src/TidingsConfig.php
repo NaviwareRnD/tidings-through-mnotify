@@ -16,6 +16,13 @@ class TidingsConfig
     protected int $retryTidings;
     protected int $retryInterval;
 
+    /**
+     * Constructor
+     *
+     * Initializes the TidingsConfig class with configuration values from the published config file.
+     *
+     * @return void
+     */
     public function __construct(){
         if($this->configNotPublished()) {
             return $this->warn("Please publish the config file by running: " .
@@ -31,49 +38,61 @@ class TidingsConfig
         $this->retryInterval = config('tidings.retry_interval');
     }
 
+    
     /**
-     * @return bool
-     * checks if config file is published
+     * Checks if the config file has been published.
+     *
+     * @return bool True if the config file has not been published, false otherwise.
      */
     public function configNotPublished(): bool
     {
         return is_null(config("tidings"));
     }
 
-    /**
-     * @return string
-     */
+    
+/**
+ * @return string
+ * Retrieves the base endpoint for the API from the configuration.
+ */
     public function getBaseEndPoint(): string
     {
         return $this->baseEndPoint;
     }
 
+    
     /**
      * @return string
+     * gets the API key from the published config file
      */
     public function getApiKey(): string
     {
         return $this->apiKey;
     }
 
+    
     /**
      * @return string
+     * gets the sender ID from the published config file
      */
     public function getSenderID(): string
     {
         return $this->senderID;
     }
 
+    
     /**
      * @return string
+     * returns the specific service that the full API URL is for
      */
     public function getSpecificService(): string
     {
         return $this->specificService;
     }
 
+    
     /**
      * @return string
+     * returns the id of the service, if specified when constructing the full api url
      */
     public function getId(): string
     {
